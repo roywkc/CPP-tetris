@@ -4,7 +4,19 @@
 
 using namespace std;
 
-int main()
+int kbhit(void)
+{
+    int ch = getch();
+
+    if (ch != ERR) {
+        ungetch(ch);
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int main(void)
 {
     initscr();
 
@@ -14,7 +26,7 @@ int main()
 
     scrollok(stdscr, TRUE);
     while (1) {
-        if (getch()) {
+        if (kbhit()) {
             printw("Key pressed! It was: %d\n", getch());
             refresh();
         } else {
