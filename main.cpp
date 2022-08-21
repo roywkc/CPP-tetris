@@ -1,16 +1,26 @@
 #include <iostream>
-#include <vector>
-#include <string>
+#include <ncurses.h>
+#include <unistd.h>
 
 using namespace std;
 
 int main()
 {
-   vector<string> msg {"Hello", "C++", "World", "from", "VS Code", "and the C++ extension!"};
+    initscr();
 
-   for (const string& word : msg)
-   {
-      cout << word << " ";
-   }
-   cout << endl;
+    cbreak();
+    noecho();
+    nodelay(stdscr, TRUE);
+
+    scrollok(stdscr, TRUE);
+    while (1) {
+        if (getch()) {
+            printw("Key pressed! It was: %d\n", getch());
+            refresh();
+        } else {
+            printw("No key pressed yet...\n");
+            refresh();
+            sleep(1);
+        }
+    }
 }
